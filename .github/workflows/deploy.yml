@@ -8,5 +8,6 @@ on:
   pull_request:
 
 jobs:
-  call-another-reusable:
+  call-workflow-passing-data:
     uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
+    secrets: inherit
