@@ -9,4 +9,4 @@ on:
 
 jobs:
   call-another-reusable:
-    uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml.yml@main
+    uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
