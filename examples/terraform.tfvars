@@ -1,0 +1,7 @@
+instance_name  = "fslive-latest"
+machine_type   = "e2-medium"
+zone           = "europe-west2-a"
+image_name     = "devops-image"
+public_ip_name = "fslive-public"
+region         = "europe-west2"
+project        = "nifty-quanta-387606"
