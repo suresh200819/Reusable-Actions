@@ -2,6 +2,10 @@ name: Reusable workflow
 
 on:
   workflow_call:
+  push:
+    branches:
+    - main
+  pull_request:
 
 jobs:
   call-another-reusable:
