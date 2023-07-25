@@ -10,4 +10,3 @@ on:
 jobs:
   call-workflow-passing-data:
     uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
-    secrets: inherit
