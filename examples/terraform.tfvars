@@ -1,4 +1,4 @@
-instance_name  = "fslive-latest"
+instance_name  = "backstage"
 machine_type   = "e2-medium"
 zone           = "europe-west2-a"
 image_name     = "devops-image"
