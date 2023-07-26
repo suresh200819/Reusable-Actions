@@ -6,6 +6,9 @@ on:
       GOOGLE_CREDENTIALS:
         description: 'A token passed from the caller workflow'
         required: true
+      TFVARS_PATH:
+        description: 'A token passed from the caller workflow'
+        required: true
   push:
     branches:
     - main
