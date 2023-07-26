@@ -2,13 +2,6 @@ name: Reusable workflow
 
 on:
   workflow_call:
-    secrets:
-      GOOGLE_CREDENTIALS:
-        description: 'A token passed from the caller workflow'
-        required: true
-      TFVARS_PATH:
-        description: 'A token passed from the caller workflow'
-        required: true
   push:
     branches:
     - main
@@ -17,3 +10,4 @@ on:
 jobs:
   call-workflow-passing-data:
     uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
+    secrets: inherit
