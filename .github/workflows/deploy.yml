@@ -1,4 +1,4 @@
-name: Reusable workflows
+name: 'GCP Deployment'
 
 on:
   workflow_call:
@@ -6,7 +6,69 @@ on:
     branches:
     - main
   pull_request:
+    branches:
+    - main
 
 jobs:
-  call-workflow-passing-data:
-    uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
+  terraform:
+    name: 'poc-adm-finserv-1133276 deployment'
+    runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:  
+    # Authenticate Private GitHub Remote Modules
+    - name: Authenticate Private Remote Modules
+      run: git config --global url."https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com".insteadOf ssh://git@github.com
+    
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: 'Authenticate to Google Cloud'
+      id: auth
+      uses: google-github-actions/auth@v1.1.1
+      with:
+        create_credentials_file: 'true'
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+        service_account: ${{ secrets.SERVICE_ACCOUNT }}
+    
+        # Setup Terraform
+    - name: Setup Terraform
+      id: setup
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.4.6
+        terraform_wrapper: true
+        
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      id: init
+      run: |
+       pwd
+       terraform init
+    
+    # Format the Terraform code  
+    - name: Terraform Format 
+      id: fmt
+      run: terraform fmt -no-color
+      
+    # Validate the Terraform code  
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan 
+      id: plan    
+      run: |
+        terraform plan -var-file="${{ secrets.TFVARS_PATH }}" -out tfplan -no-color
+        echo ${{ steps.plan.outputs.stdout }}
+        
+    # Terraform Show 
+    - name: Terraform Show
+      id: show
+      run: terraform show -no-color tfplan
