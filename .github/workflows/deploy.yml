@@ -1,4 +1,4 @@
-name: Reusable workflows
+name: Reusable workflow
 
 on:
   workflow_call:
@@ -9,8 +9,5 @@ on:
 
 jobs:
   call-workflow-passing-data:
-   permissions:
-     contents: read
-     pull-requests: none
-     id-token: none
-   uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
+    uses: suresh200819/GitHub-Actions-Test/.github/workflows/deploy.yml@main
+    secrets: inherit
